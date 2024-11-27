@@ -18,7 +18,18 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello!!!!!")
 }
 
-func formHandler(w http.ResponseWriter, r *http.Request)
+func formHandler(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+	fmt.Fprintf(w, "Post request successful")
+	name := r.FormValue("name")
+	address := r.FormValue("address")
+	fmt.Fprintf(w, "Name = %s\n", name)
+	fmt.Fprintf(w, "Address = %s\n", address)
+
+}
 
 func main() {
 	fileServer := http.FileServer(http.Dir("./static")) //it will look for static file and by default pick the index.html
